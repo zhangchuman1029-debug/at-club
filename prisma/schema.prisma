@@ -1,0 +1,39 @@
+// prisma/schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+// 球员：管理员可以增删改
+model Player {
+  id          Int      @id @default(autoincrement())
+  name        String
+  number      String   @unique
+  position    String   // 例如：Setter, Hitter
+  quote       String?
+  imageUrl    String?  // 存储上传后的本地路径，如 /uploads/ant.jpg
+  isFounder   Boolean  @default(false)
+  createdAt   DateTime @default(now())
+}
+
+// 时间表
+model Schedule {
+  id        Int      @id @default(autoincrement())
+  date      DateTime
+  location  String
+  activity  String   // 训练内容或比赛详情
+  createdAt DateTime @default(now())
+}
+
+// 训练视频
+model Video {
+  id        Int      @id @default(autoincrement())
+  title     String
+  videoUrl  String   // 可以是 YouTube 链接或本地路径
+  thumbnail String?
+  createdAt DateTime @default(now())
+}
